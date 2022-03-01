@@ -58,7 +58,57 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
+  /*
+  window.addEventListener('keydown', function (e) {
+    // console.log(e.keyCode);
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`)
+    console.log(audio);
+    if(!audio) return; // stop function from running all together
+    audio.currentTime = 0; 
+    audio.play(); // play on element that's already playing won't play it again 
+    // so we add line before to rewind it
 
+    // select key too
+    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`)
+    // console.log(key);
+    
+    // now animation; in css, we have style with transition line in .key and we have .playing (add .playing class, we tranform and change border color...)
+    key.classList.add('playing');
+    // we also have to remove class after
+    const keys = document.querySelectorAll('.key'); 
+
+    function removeTransition(e) {
+      // pick longest one
+      if(e.propertyName !== 'transform') return;
+      console.log(e.propertyName);
+      console.log(this); // key in thsi case since that's what we called removeTransition on (last line in this script tag)
+      this.classList.remove('playing');
+      
+
+    }
+    keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+  }
+  */
+
+  // we clean above to this
+  function playSound(e) {
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+    if(!audio) return; // stop function from running all together
+    
+    audio.currentTime = 0; 
+    audio.play(); 
+    key.classList.add('playing');
+  }
+
+  function removeTransition(e) {
+    if(e.propertyName !== 'transform') return;
+    e.target.classList.remove('playing');
+  }
+
+  const keys = document.querySelectorAll('.key'); 
+  keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+  window.addEventListener('keydown', playSound);
 </script>
 
 
