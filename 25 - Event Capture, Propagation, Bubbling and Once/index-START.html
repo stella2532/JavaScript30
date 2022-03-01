@@ -42,7 +42,32 @@
 
 <button></button>
 <script>
+  const divs = document.querySelectorAll('div');
 
+  function logText(e) {
+    console.log(this.classList.value);
+    //e.stopPropagation(); // stop it from going further
+
+  }
+
+  divs.forEach(div => div.addEventListener('click', logText, {
+    //capture: true // function is not on bubble up, it's run on capture down
+
+    // once = run once, but never run again even with further clicks
+    capture: false,
+    once: true // goes in the options of addEventListener; can be useful for buttons
+  }));
+
+  // once is same as
+  //div.removeEventListener('click', logText);
+
+  // button
+  const button = document.querySelector('button');
+  button.addEventListener('click', () => {
+    console.log('click!!');
+  }, {
+    once: true
+  });  // e.g. in store checkouts, prevent adding multiple times
 </script>
 </body>
 </html>
